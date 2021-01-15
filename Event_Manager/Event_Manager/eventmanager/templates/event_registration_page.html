@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+
+{% block content %}
+
+<!--
+<style>
+    .date {
+        width: 300px;
+    }
+</style>
+
+<form method="POST">
+    {% csrf_token %}
+
+    {{ form | crispy }}
+
+    {{ form.non_field_errors }}
+
+    <div id="event_name">
+        {{ form.event_name.errors }}
+        <label for="event_name">Event Name:</label>
+        {{ form.event_name }}
+    </div>
+
+    <div id="description">
+        {{ form.description.errors }}
+        <label for="description">Description:</label>
+        {{ form.description }}
+    </div>
+
+    <div id="location">
+        {{ form.location.errors }}
+        <label for="location">Location:</label>
+        {{ form.location }}
+    </div>
+
+    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+        {{ form.from_date.errors }}
+        <label for="datetimepicker1">From Date:</label>
+        {{ form.from_date }}
+        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+    </div>
+
+    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+        {{ form.to_date.errors }}
+        <label for="datetimepicker2">To Date:</label>
+        {{ form.to_date }}
+        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+    </div>
+
+    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+        {{ form.registration_deadline.errors }}
+        <label for="datetimepicker3">Registration Deadline:</label>
+        {{ form.registration_deadline }}
+        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+    </div>
+
+    <div id="email">
+        {{ form.host_email.errors }}
+        <label for="email">Host Email:</label>
+        {{ form.host_email }}
+    </div>
+
+    <div id="password">
+        {{ form.host_password.errors }}
+        <label for="password">Host Password:</label>
+        {{ form.host_password }}
+    </div>
+
+    <button type="submit">Submit</button>
+</form> -->
+
+<style>
+
+body {
+    text-align: center;
+}
+h1 {
+    padding: 40px;
+}
+input {
+    margin: 5px;
+}
+button {
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+</style>
+
+<h1>Event Registration</h1>
+<form method="POST" action="{% url 'event_registration' %}">
+    {% csrf_token %}
+    <div>
+        <label for="event_name">Event Name:</label>
+        <input name="event_name" type="text" id="event_name" maxlength="50" required>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" cols="20" rows="3" required></textarea>
+    </div>
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" maxlength="50" required>
+    </div>
+    <div>
+        <label for="from_date">From Date:</label>
+        <input type="datetime-local" id="from_date" name="from_date" required>
+
+        <label for="to_date">To Date:</label>
+        <input type="datetime-local" id="to_date" name="to_date" required>
+    </div>
+    <div>
+        <label for="registration_deadline">Registration Deadline:</label>
+        <input type="datetime-local" id="registration_deadline" name="registration_deadline" required>
+    </div>
+    <div>
+        <label for="host_email">Host Email:</label>
+        <input type="email" id="host_email" name="host_email" required>
+    </div>
+    <div>
+        <label for="host_password">Host Password:</label>
+        <input type="password" id="host_password" name="host_password" maxlength="50" required>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+<a href="{% url 'home' %}">Back to home page</a>
+
+<script>
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+  $(function () {
+    $("#datetimepicker2").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+  $(function () {
+    $("#datetimepicker3").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+</script>
+
+{% endblock %}

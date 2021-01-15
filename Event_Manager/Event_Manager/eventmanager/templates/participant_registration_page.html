@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    form {
+        text-align: center;
+    }
+    h1{
+        margin-bottom: 40px;
+        padding: 20px;
+    }
+    #people {
+        display: none;
+    }
+    .events {
+        padding-left: 20px;
+    }
+    input {
+        margin: 10px;
+    }
+    button {
+        margin: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<h1>Registrations are open for the following events:</h1>
+{% for event in events %}
+    {% if now.date < event.registrationDeadline.date %}
+        <h5 class="events">{{ event.eventName }}</h5>
+        <div class="events">Description: {{ event.description }}</div>
+        <div class="events">Event Dates: from {{ event.fromDate }} to {{ event.toDate }}</div>
+        <div class="events">Registration Deadline: {{ event.registrationDeadline }}</div>
+        <div class="events">Venue: {{ event.location }}</div> <br>
+    {% elif now.date == event.registrationDeadline.date %}
+        {% if now.time < event.registrationDeadline.time %}
+            <h5 class="events">{{ event.eventName }}</h5>
+            <div class="events">Description: {{ event.description }}</div>
+            <div class="events">Event Dates: from {{ event.fromDate }} to {{ event.toDate }}</div>
+            <div class="events">Registration Deadline: {{ event.registrationDeadline }}</div>
+            <div class="events">Venue: {{ event.location }}</div> <br>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+<h1 align="center">Participant Registration</h1>
+
+<form method="POST" action="{% url 'participant_registration' %}">
+    {% csrf_token %}
+    <div>
+        <label for="participant_name">Participant Name:</label>
+        <input name="participant_name" type="text" id="participant_name" maxlength="50" required>
+    </div>
+    <div>
+        <label for="contact_no">Contact Number:</label>
+        <input type="number" name="contact_no" id="contact_no" min="1000000000" max="9999999999" required>
+    </div>
+    <div>
+        <label for="participant_email">Participant Email:</label>
+        <input type="email" id="participant_email" name="participant_email" maxlength="50" required>
+    </div>
+    <div>
+        <label>Event to participate in: </label>
+        {% for event in events %}
+            {% if now.date < event.registrationDeadline.date %}
+                <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.eventName }}" required>
+                <label for="{{ event.eventName }}">{{ event.eventName }}</label>
+            {% elif now.date == event.registrationDeadline.date %}
+                {% if now.time < event.registrationDeadline.time %}
+                    <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.eventName }}" required>
+                    <label for="{{ event.eventName }}">{{ event.eventName }}</label>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div>
+        <label>Registration Type: </label>
+        <input type="radio" id="individual" name="registration_type" value="individual" onchange="displayNoPeople(this.value)" required>
+        <label for="individual">Individual</label>
+        <input type="radio" id="group" name="registration_type" value="group" onchange="displayNoPeople(this.value)" required>
+        <label for="group">Group</label>
+    </div>
+    <div id="people">
+        <label for="no_of_people">Number of people: </label>
+        <input type="number" id="no_of_people" name="no_of_people" max="4">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+<div align="center">
+    <a href="{% url 'home' %}">Back to home page</a>
+</div>
+
+<script>
+    function displayNoPeople(option) {
+        if(option == "individual"){
+            document.getElementById("people").style.display = "none";
+            document.getElementById("no_of_people").required = false;
+            document.getElementById("no_of_people").value = 1;
+        } else if (option == "group"){
+            document.getElementById("people").style.display = "block";
+            document.getElementById("no_of_people").required = true;
+        }
+    }
+</script>
+
+{% endblock %}
