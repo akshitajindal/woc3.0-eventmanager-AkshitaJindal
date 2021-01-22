@@ -3,28 +3,63 @@
 {% block content %}
 <style>
 body {
-    background : url("/static/images/home_page_img.png");
+    /*background : url("/static/images/home_page_img.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: auto 500px;
+    background-size: auto 900px;*/
+    background-image: linear-gradient(to right, turquoise , midnightblue);
 }
 div div h1 {
-    text-align : right;
-    padding : 30px;
-    margin-top: 100px;
-    margin-bottom: 30px;
-    margin-right: 100px;
-    color : white;
+    text-align : center;
+    color: white;
 }
 div div a {
-    padding: 20px;
-    font-size: 25px;
     color : white;
-    margin-right: 100px;
+}
+a:hover {
+    text-decoration: none;
+    background-color: rgba(255,255,255,0.5);
+    color: peru;
 }
 div div {
-    text-align : right;
+    text-align : center;
+}
+@media (max-width: 400px) {
+    div div h1 {
+        font-size: 20px;
+        margin-top: 200px;
+        margin-bottom: 20px;
+    }
+    div div a {
+        margin: 20px;
+        font-size: 20px;
+    }
+}
+@media (min-width: 400px) {
+    div div h1 {
+        font-size: 30px;
+        margin-top: 150px;
+        margin-bottom: 20px;
+    }
+    div div a {
+        margin: 20px;
+        font-size: 20px;
+    }
+}
+@media (min-width: 700px) {
+    body {
+        /*background-size: auto 700px;*/
+    }
+    div div h1 {
+        padding : 30px;
+        margin-top: 130px;
+        margin-bottom: 30px;
+    }
+    div div a {
+        margin: 20px;
+        font-size: 25px;
+    }
 }
 </style>
 
@@ -33,9 +68,10 @@ div div {
         <h1>Event Manager Web App</h1>
     </div>
     <div class="container">
-        <a href="{% url 'event_registration' %}">Event Registration</a> <br>
-        <a href="{% url 'participant_registration' %}">Participant Registration</a> <br>
-        <a href="#">Event Dashboard</a>
+        <br>
+        <a href="{% url 'event_registration' %}">Event Registration</a> <br> <br>
+        <a href="{% url 'participant_registration' %}">Participant Registration</a> <br> <br>
+        <a href="{% url 'event_dashboard' %}">Event Dashboard</a>
     </div>
 </div>
 

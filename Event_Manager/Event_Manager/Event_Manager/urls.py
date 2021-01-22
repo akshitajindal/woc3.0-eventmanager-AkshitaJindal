@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('event_registration', views.event_registration, name='event_registration'),
     path('participant_registration', views.participant_registration, name='participant_registration'),
+    path('event_dashboard', views.event_dashboard, name='event_dashboard'),
     url('^$', views.home, name='home'),
 ]

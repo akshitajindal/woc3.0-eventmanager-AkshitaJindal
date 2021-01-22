@@ -79,21 +79,29 @@
 </form> -->
 
 <style>
-
-body {
-    text-align: center;
-}
-h1 {
-    padding: 40px;
-}
-input {
-    margin: 5px;
-}
-button {
-    margin: 10px;
-    margin-bottom: 20px;
-}
-
+    body{
+        background-image: linear-gradient(to right, turquoise , midnightblue);
+        color: white;
+        text-align: center;
+    }
+    a:hover {
+        text-decoration: none;
+        background-color: rgba(255,255,255,0.5);
+        color: peru;
+    }
+    a{
+        color: white;
+    }
+    h1 {
+        padding: 40px;
+    }
+    input {
+        margin: 5px;
+    }
+    button {
+        margin: 10px;
+        margin-bottom: 20px;
+    }
 </style>
 
 <h1>Event Registration</h1>
@@ -112,6 +120,10 @@ button {
         <input type="text" id="location" name="location" maxlength="50" required>
     </div>
     <div>
+        <label for="poster_link">Poster Link:</label>
+        <input type="url" id="poster_link" name="poster_link" maxlength="200" required>
+    </div>
+    <div>
         <label for="from_date">From Date:</label>
         <input type="datetime-local" id="from_date" name="from_date" required>
 
@@ -127,7 +139,7 @@ button {
         <input type="email" id="host_email" name="host_email" required>
     </div>
     <div>
-        <label for="host_password">Host Password:</label>
+        <label for="host_password">Host Event Password:</label>
         <input type="password" id="host_password" name="host_password" maxlength="50" required>
     </div>
     <button type="submit">Submit</button>

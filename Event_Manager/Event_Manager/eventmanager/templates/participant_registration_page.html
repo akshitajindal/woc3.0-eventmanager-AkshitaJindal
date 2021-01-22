@@ -3,6 +3,10 @@
 {% block content %}
 
 <style>
+    body{
+        background-image: linear-gradient(to right, turquoise , midnightblue);
+        color: white;
+    }
     form {
         text-align: center;
     }
@@ -22,6 +26,19 @@
     button {
         margin: 10px;
         margin-bottom: 20px;
+    }
+    #message {
+        color: red;
+        text-align: center;
+        margin: 30px;
+    }
+    a:hover {
+        text-decoration: none;
+        background-color: rgba(255,255,255,0.5);
+        color: peru;
+    }
+    a{
+        color: white;
     }
 </style>
 
@@ -64,11 +81,11 @@
         <label>Event to participate in: </label>
         {% for event in events %}
             {% if now.date < event.registrationDeadline.date %}
-                <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.eventName }}" required>
+                <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.id }}" required>
                 <label for="{{ event.eventName }}">{{ event.eventName }}</label>
             {% elif now.date == event.registrationDeadline.date %}
                 {% if now.time < event.registrationDeadline.time %}
-                    <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.eventName }}" required>
+                    <input type="radio" id="{{ event.eventName }}" name="event_to_participate" value="{{ event.id }}" required>
                     <label for="{{ event.eventName }}">{{ event.eventName }}</label>
                 {% endif %}
             {% endif %}
@@ -87,6 +104,13 @@
     </div>
     <button type="submit">Submit</button>
 </form>
+
+{% if messages %}
+    {% for message in messages %}
+        <h6 id="message">{{ message }}</h6>
+    {% endfor %}
+{% endif %}
+
 <div align="center">
     <a href="{% url 'home' %}">Back to home page</a>
 </div>
