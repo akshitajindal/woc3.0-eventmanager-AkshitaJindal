@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body{
+        background-image: linear-gradient(to right, turquoise , midnightblue);
+        color: white;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        text-align: center;
+    }
+    a:hover {
+        text-decoration: none;
+        background-color: rgba(255,255,255,0.5);
+        color: peru;
+    }
+    a{
+        color: white;
+    }
+    h1{
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 20px;
+    }
+    form {
+        text-align: center;
+    }
+    input {
+        margin: 10px;
+    }
+    button {
+        margin: 10px;
+        margin-bottom: 20px;
+    }
+    #message {
+        color: red;
+        text-align: center;
+        margin: 30px;
+    }
+    #table {
+        width: 75%;
+        margin: 30px auto;
+    }
+</style>
+
+
+<h1>Event Dashboard</h1>
+<form method="POST" action="{% url 'event_dashboard' %}">
+    {% csrf_token %}
+    <div>
+        <label for="event_id">Event Id: </label>
+        <input type="number" id="event_id" name="event_id" required>
+    </div>
+    <div>
+        <label for="host_email">Host Email:</label>
+        <input type="email" id="host_email" name="host_email" required>
+    </div>
+    <div>
+        <label for="host_password">Host Event Password:</label>
+        <input type="password" id="host_password" name="host_password" maxlength="50" required>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <h6 id="message">{{ message }}</h6>
+    {% endfor %}
+{% endif %}
+
+{% if participants %}
+<table class="table" id="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Participant ID</th>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>Email</th>
+            <th>Registration Type</th>
+            <th>Number of People</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for participant in participants %}
+            <tr>
+                <td>{{ participant.id }}</td>
+                <td>{{ participant.participantName }}</td>
+                <td>{{ participant.contactNumber }}</td>
+                <td>{{ participant.participantEmail }}</td>
+                <td>{{ participant.registrationType }}</td>
+                <td>{{ participant.noOfPeople }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<div align="center">
+    <a href="{% url 'home' %}">Back to home page</a>
+</div>
+
+
+{% endblock %}
